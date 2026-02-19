@@ -1,0 +1,1383 @@
+<!DOCTYPE html>
+<html lang="uk">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Irpin City Birds | Енциклопедія птахів України</title>
+    <meta name="description"
+        content="Irpin City Birds — повна енциклопедія птахів України. Фото, описи, таксономія, охоронний статус, ареал.">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800;900&family=JetBrains+Mono:wght@400;700&family=Playfair+Display:wght@700;900&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            --bg: #04060a;
+            --bg2: #080b11;
+            --panel: rgba(10, 14, 22, 0.98);
+            --border: rgba(255, 255, 255, 0.07);
+            --border2: rgba(255, 255, 255, 0.13);
+            --accent: #58a6ff;
+            --green: #3fb950;
+            --orange: #ff9800;
+            --red: #ef4444;
+            --purple: #a855f7;
+            --gold: #f6c90e;
+            --text: #e6edf3;
+            --text-dim: #7d8590;
+            --text-mid: #b0bac5;
+            --inat: #74ac00;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+        }
+
+        body {
+            background: var(--bg);
+            color: var(--text);
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        /* ─── HEADER ───────────────────────────────────── */
+        header {
+            height: 62px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 24px;
+            background: rgba(4, 6, 10, 0.99);
+            border-bottom: 1px solid var(--border2);
+            flex-shrink: 0;
+            z-index: 100;
+        }
+
+        .h-logo {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .h-icon {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, rgba(255, 152, 0, 0.25), rgba(255, 152, 0, 0.05));
+            border: 1px solid rgba(255, 152, 0, 0.5);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.3rem;
+        }
+
+        .h-wordmark {
+            display: flex;
+            flex-direction: column;
+            gap: 1px;
+        }
+
+        .h-title {
+            font-size: 1rem;
+            font-weight: 900;
+            letter-spacing: -0.5px;
+            background: linear-gradient(90deg, #fff 0%, rgba(255, 152, 0, 0.9) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .h-sub {
+            font-size: 0.55rem;
+            color: var(--text-dim);
+            font-family: 'JetBrains Mono', monospace;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .h-stats {
+            display: flex;
+            gap: 24px;
+            align-items: center;
+        }
+
+        .h-stat {
+            text-align: center;
+        }
+
+        .h-stat-val {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 1rem;
+            font-weight: 700;
+            color: var(--accent);
+            display: block;
+        }
+
+        .h-stat-lab {
+            font-size: 0.5rem;
+            color: var(--text-dim);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .h-time {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.72rem;
+            color: var(--text-dim);
+            padding: 5px 13px;
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            background: rgba(255, 255, 255, 0.02);
+        }
+
+        /* ─── LAYOUT ────────────────────────────────────── */
+        .app {
+            flex: 1;
+            display: flex;
+            overflow: hidden;
+        }
+
+        /* ─── SIDEBAR ───────────────────────────────────── */
+        .sidebar {
+            width: 320px;
+            flex-shrink: 0;
+            display: flex;
+            flex-direction: column;
+            border-right: 1px solid var(--border2);
+            background: var(--bg2);
+        }
+
+        .search-box {
+            padding: 14px 14px 12px;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            flex-direction: column;
+            gap: 9px;
+        }
+
+        .search-wrap {
+            position: relative;
+        }
+
+        .search-wrap input {
+            width: 100%;
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid var(--border2);
+            border-radius: 12px;
+            padding: 9px 14px 9px 36px;
+            color: var(--text);
+            font-size: 0.82rem;
+            outline: none;
+            transition: 0.2s;
+        }
+
+        .search-wrap input:focus {
+            border-color: var(--accent);
+            background: rgba(88, 166, 255, 0.05);
+        }
+
+        .search-wrap input::placeholder {
+            color: var(--text-dim);
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 11px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-dim);
+            font-size: 0.85rem;
+            pointer-events: none;
+        }
+
+        .filter-row {
+            display: flex;
+            gap: 5px;
+            flex-wrap: wrap;
+        }
+
+        .fchip {
+            font-size: 0.55rem;
+            font-weight: 700;
+            padding: 3px 8px;
+            border-radius: 20px;
+            border: 1px solid var(--border2);
+            background: rgba(255, 255, 255, 0.02);
+            color: var(--text-dim);
+            cursor: pointer;
+            transition: 0.2s;
+            text-transform: uppercase;
+        }
+
+        .fchip.active {
+            border-color: var(--accent);
+            color: var(--accent);
+            background: rgba(88, 166, 255, 0.08);
+        }
+
+        .fchip.nt.active {
+            border-color: var(--purple);
+            color: var(--purple);
+            background: rgba(168, 85, 247, 0.08);
+        }
+
+        .fchip.vu.active {
+            border-color: var(--orange);
+            color: var(--orange);
+            background: rgba(255, 152, 0, 0.08);
+        }
+
+        .fchip.en.active {
+            border-color: var(--red);
+            color: var(--red);
+            background: rgba(239, 68, 68, 0.08);
+        }
+
+        .fchip.cr.active {
+            border-color: #b91c1c;
+            color: #fca5a5;
+            background: rgba(185, 28, 28, 0.1);
+        }
+
+        .sp-count-label {
+            font-size: 0.58rem;
+            color: var(--text-dim);
+            padding: 3px 6px;
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        .species-list {
+            flex: 1;
+            overflow-y: auto;
+            padding: 6px;
+        }
+
+        .species-list::-webkit-scrollbar {
+            width: 3px;
+        }
+
+        .species-list::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 3px;
+        }
+
+        .sp-card {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 9px 10px;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: 0.16s;
+            border: 1px solid transparent;
+            margin-bottom: 3px;
+        }
+
+        .sp-card:hover {
+            background: rgba(255, 255, 255, 0.04);
+            border-color: var(--border);
+        }
+
+        .sp-card.active {
+            background: rgba(88, 166, 255, 0.08);
+            border-color: rgba(88, 166, 255, 0.3);
+        }
+
+        .sp-thumb {
+            width: 44px;
+            height: 44px;
+            border-radius: 9px;
+            object-fit: cover;
+            border: 1px solid var(--border);
+            flex-shrink: 0;
+        }
+
+        .sp-info {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .sp-name {
+            font-size: 0.8rem;
+            font-weight: 700;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .sp-sci {
+            font-size: 0.62rem;
+            font-style: italic;
+            color: var(--text-dim);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .sp-meta {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            margin-top: 2px;
+        }
+
+        .iucn-dot {
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            flex-shrink: 0;
+        }
+
+        .sp-obs-count {
+            font-size: 0.56rem;
+            font-family: 'JetBrains Mono', monospace;
+            color: var(--text-dim);
+        }
+
+        .iucn-badge-small {
+            font-size: 0.48rem;
+            font-weight: 800;
+            padding: 1px 4px;
+            border-radius: 3px;
+            text-transform: uppercase;
+        }
+
+        /* ─── MAIN DETAIL ───────────────────────────────── */
+        .detail {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        .detail-empty {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-dim);
+            gap: 14px;
+        }
+
+        .detail-empty .big-icon {
+            font-size: 6rem;
+            opacity: 0.1;
+        }
+
+        .detail-empty h2 {
+            font-size: 1.3rem;
+            font-weight: 300;
+            color: var(--text-dim);
+        }
+
+        .detail-empty p {
+            font-size: 0.78rem;
+            color: var(--text-dim);
+            opacity: 0.6;
+        }
+
+        /* ─── HERO ──────────────────────────────────────── */
+        .hero {
+            position: relative;
+            height: 280px;
+            flex-shrink: 0;
+            overflow: hidden;
+        }
+
+        .hero-img-main {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .hero:hover .hero-img-main {
+            transform: scale(1.03);
+        }
+
+        .hero-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(0deg, rgba(4, 6, 10, 1) 0%, rgba(4, 6, 10, 0.5) 40%, rgba(4, 6, 10, 0.1) 100%);
+        }
+
+        .hero-badges {
+            position: absolute;
+            top: 14px;
+            left: 16px;
+            display: flex;
+            gap: 6px;
+            flex-wrap: wrap;
+        }
+
+        .badge {
+            font-size: 0.58rem;
+            font-weight: 800;
+            padding: 3px 8px;
+            border-radius: 5px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .badge-lc {
+            background: rgba(88, 166, 255, 0.2);
+            color: var(--accent);
+            border: 1px solid rgba(88, 166, 255, 0.3);
+        }
+
+        .badge-nt {
+            background: rgba(168, 85, 247, 0.2);
+            color: var(--purple);
+            border: 1px solid rgba(168, 85, 247, 0.3);
+        }
+
+        .badge-vu {
+            background: rgba(255, 152, 0, 0.2);
+            color: var(--orange);
+            border: 1px solid rgba(255, 152, 0, 0.3);
+        }
+
+        .badge-en {
+            background: rgba(239, 68, 68, 0.2);
+            color: var(--red);
+            border: 1px solid rgba(239, 68, 68, 0.3);
+        }
+
+        .badge-cr {
+            background: rgba(185, 28, 28, 0.3);
+            color: #fca5a5;
+            border: 1px solid rgba(185, 28, 28, 0.4);
+        }
+
+        .badge-inat {
+            background: rgba(116, 172, 0, 0.15);
+            color: var(--inat);
+            border: 1px solid rgba(116, 172, 0, 0.25);
+        }
+
+        .badge-photo-num {
+            background: rgba(0, 0, 0, 0.5);
+            color: rgba(255, 255, 255, 0.8);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+        }
+
+        .hero-name-wrap {
+            position: absolute;
+            bottom: 16px;
+            left: 16px;
+            right: 16px;
+        }
+
+        .hero-name {
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            font-weight: 900;
+            line-height: 1.1;
+            text-shadow: 0 2px 20px rgba(0, 0, 0, 0.8);
+            margin-bottom: 3px;
+        }
+
+        .hero-sci {
+            font-size: 0.9rem;
+            font-style: italic;
+            color: rgba(255, 255, 255, 0.55);
+        }
+
+        /* ─── CONTENT BELOW HERO ─────────────────────────── */
+        .content-scroll {
+            flex: 1;
+            overflow-y: auto;
+            padding: 0;
+        }
+
+        .content-scroll::-webkit-scrollbar {
+            width: 4px;
+        }
+
+        .content-scroll::-webkit-scrollbar-thumb {
+            background: var(--border2);
+            border-radius: 4px;
+        }
+
+        /* Stats row */
+        .stats-row {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .stat-cell {
+            padding: 14px 10px;
+            text-align: center;
+            border-right: 1px solid var(--border);
+        }
+
+        .stat-cell:last-child {
+            border-right: none;
+        }
+
+        .stat-cell-val {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 1.05rem;
+            font-weight: 700;
+            color: var(--accent);
+            display: block;
+        }
+
+        .stat-cell-lab {
+            font-size: 0.52rem;
+            text-transform: uppercase;
+            color: var(--text-dim);
+            letter-spacing: 1px;
+            margin-top: 3px;
+        }
+
+        /* Two column layout */
+        .two-col {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .col-left {
+            border-right: 1px solid var(--border);
+        }
+
+        .section {
+            padding: 20px;
+        }
+
+        .section-title {
+            font-size: 0.58rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--text-dim);
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .section-title::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: var(--border);
+        }
+
+        .desc-text {
+            font-size: 0.8rem;
+            line-height: 1.75;
+            color: var(--text-mid);
+        }
+
+        /* Taxonomy table */
+        .taxo-table {
+            width: 100%;
+        }
+
+        .taxo-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 5px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+            font-size: 0.75rem;
+        }
+
+        .taxo-row:last-child {
+            border-bottom: none;
+        }
+
+        .taxo-key {
+            color: var(--text-dim);
+        }
+
+        .taxo-val {
+            color: var(--text);
+            font-weight: 600;
+            text-align: right;
+            max-width: 60%;
+        }
+
+        /* Photo gallery */
+        .photo-gallery {
+            padding: 16px 20px 20px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 8px;
+            margin-top: 0;
+        }
+
+        .gallery-img {
+            aspect-ratio: 1;
+            border-radius: 10px;
+            object-fit: cover;
+            border: 1px solid var(--border);
+            cursor: pointer;
+            transition: 0.2s;
+            width: 100%;
+        }
+
+        .gallery-img:hover {
+            border-color: var(--accent);
+            transform: scale(1.03);
+        }
+
+        .gallery-img.featured {
+            grid-column: span 2;
+            grid-row: span 2;
+            border-radius: 12px;
+        }
+
+        /* Observations section */
+        .obs-section {
+            padding: 16px 20px 20px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .obs-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 8px;
+        }
+
+        .obs-card {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            overflow: hidden;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .obs-card:hover {
+            border-color: var(--border2);
+        }
+
+        .obs-card-img {
+            width: 100%;
+            aspect-ratio: 4/3;
+            object-fit: cover;
+        }
+
+        .obs-card-info {
+            padding: 7px 9px;
+        }
+
+        .obs-card-place {
+            font-size: 0.65rem;
+            font-weight: 700;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .obs-card-meta {
+            font-size: 0.56rem;
+            color: var(--text-dim);
+            margin-top: 2px;
+        }
+
+        /* Extra info row */
+        .extra-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .extra-cell {
+            padding: 16px 20px;
+            border-right: 1px solid var(--border);
+        }
+
+        .extra-cell:last-child {
+            border-right: none;
+        }
+
+        .extra-cell-title {
+            font-size: 0.58rem;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: var(--text-dim);
+            margin-bottom: 8px;
+        }
+
+        .tag-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 5px;
+        }
+
+        .tag {
+            font-size: 0.62rem;
+            padding: 3px 8px;
+            border-radius: 15px;
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid var(--border2);
+            color: var(--text-mid);
+        }
+
+        /* Loading */
+        .loader-wrap {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            flex: 1;
+            gap: 14px;
+            color: var(--text-dim);
+            padding: 60px;
+        }
+
+        .spinner {
+            width: 34px;
+            height: 34px;
+            border: 2px solid rgba(255, 255, 255, 0.07);
+            border-top-color: var(--accent);
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        /* IUCN colors */
+        .iucn-lc {
+            color: var(--accent);
+        }
+
+        .iucn-nt {
+            color: var(--purple);
+        }
+
+        .iucn-vu {
+            color: var(--orange);
+        }
+
+        .iucn-en {
+            color: var(--red);
+        }
+
+        .iucn-cr {
+            color: #fca5a5;
+        }
+
+        /* Mobile */
+        @media (max-width: 900px) {
+            body {
+                overflow: auto;
+                height: auto;
+            }
+
+            .app {
+                flex-direction: column;
+                overflow: visible;
+            }
+
+            .sidebar {
+                width: 100%;
+                height: auto;
+                border-right: none;
+                border-bottom: 1px solid var(--border);
+            }
+
+            .two-col {
+                grid-template-columns: 1fr;
+            }
+
+            .col-left {
+                border-right: none;
+                border-bottom: 1px solid var(--border);
+            }
+
+            .stats-row {
+                grid-template-columns: repeat(3, 1fr);
+            }
+
+            .gallery-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+
+            .obs-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .extra-row {
+                grid-template-columns: 1fr;
+            }
+
+            .extra-cell {
+                border-right: none;
+                border-bottom: 1px solid var(--border);
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <div class="h-logo">
+            <div class="h-icon">🐦</div>
+            <div class="h-wordmark">
+                <div class="h-title">IRPIN CITY BIRDS</div>
+                <div class="h-sub">Енциклопедія птахів України · Encyclopedia UA</div>
+            </div>
+        </div>
+        <div class="h-stats">
+            <div class="h-stat">
+                <span class="h-stat-val" id="stat-species">—</span>
+                <span class="h-stat-lab">Видів UA</span>
+            </div>
+            <div class="h-stat">
+                <span class="h-stat-val" id="stat-obs">—</span>
+                <span class="h-stat-lab">Спостережень</span>
+            </div>
+            <div class="h-time" id="clock">00:00:00</div>
+        </div>
+    </header>
+
+    <div class="app">
+
+        <!-- ═══ SIDEBAR ═══ -->
+        <div class="sidebar">
+            <div class="search-box">
+                <div class="search-wrap">
+                    <span class="search-icon">🔍</span>
+                    <input type="text" id="search-input" placeholder="Пошук птаха (укр. або латинська)..."
+                        autocomplete="off">
+                </div>
+                <div class="filter-row">
+                    <div class="fchip active" data-filter="all">Всі</div>
+                    <div class="fchip" data-filter="LC">LC</div>
+                    <div class="fchip nt" data-filter="NT">NT</div>
+                    <div class="fchip vu" data-filter="VU">VU</div>
+                    <div class="fchip en" data-filter="EN">EN</div>
+                    <div class="fchip cr" data-filter="CR">CR</div>
+                </div>
+                <div class="sp-count-label" id="sp-count-label">Завантаження...</div>
+            </div>
+            <div class="species-list" id="species-list">
+                <div class="loader-wrap">
+                    <div class="spinner"></div>
+                    <span style="font-size:0.73rem;">Завантаження бази птахів...</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- ═══ MAIN DETAIL ═══ -->
+        <div class="detail">
+
+            <!-- Empty state -->
+            <div class="detail-empty" id="detail-empty">
+                <div class="big-icon">🦅</div>
+                <h2>Оберіть птаха зі списку</h2>
+                <p>iNaturalist · Wikipedia · Фото-галерея · Охоронний статус</p>
+            </div>
+
+            <!-- Bird detail -->
+            <div id="detail-view" style="display:none; flex:1; flex-direction:column; overflow:hidden;">
+
+                <!-- Hero image -->
+                <div class="hero">
+                    <img class="hero-img-main" id="d-hero-img" src="" alt="">
+                    <div class="hero-overlay"></div>
+                    <div class="hero-badges" id="d-badges"></div>
+                    <div class="hero-name-wrap">
+                        <div class="hero-name" id="d-name">—</div>
+                        <div class="hero-sci" id="d-sci">—</div>
+                    </div>
+                </div>
+
+                <!-- Scrollable content -->
+                <div class="content-scroll" id="content-scroll">
+
+                    <!-- Stats row -->
+                    <div class="stats-row" id="d-stats-row">
+                        <div class="stat-cell"><span class="stat-cell-val" id="ds-obs">—</span>
+                            <div class="stat-cell-lab">Спостережень UA</div>
+                        </div>
+                        <div class="stat-cell"><span class="stat-cell-val" id="ds-world">—</span>
+                            <div class="stat-cell-lab">Світ (iNat)</div>
+                        </div>
+                        <div class="stat-cell"><span class="stat-cell-val" id="ds-photos">—</span>
+                            <div class="stat-cell-lab">Фотографій</div>
+                        </div>
+                        <div class="stat-cell"><span class="stat-cell-val" id="ds-iucn"
+                                style="color:var(--green);">—</span>
+                            <div class="stat-cell-lab">IUCN Статус</div>
+                        </div>
+                        <div class="stat-cell"><span class="stat-cell-val" id="ds-rank">—</span>
+                            <div class="stat-cell-lab">Таксон</div>
+                        </div>
+                    </div>
+
+                    <!-- Description + Taxonomy -->
+                    <div class="two-col">
+                        <div class="col-left section">
+                            <div class="section-title">Опис</div>
+                            <div class="desc-text" id="d-desc">Завантаження...</div>
+                        </div>
+                        <div class="section">
+                            <div class="section-title">Таксономія</div>
+                            <div class="taxo-table" id="d-taxo"></div>
+                        </div>
+                    </div>
+
+                    <!-- Photo Gallery -->
+                    <div class="photo-gallery">
+                        <div class="section-title">Фото-галерея (iNaturalist)</div>
+                        <div class="gallery-grid" id="d-gallery">
+                            <div
+                                style="grid-column:span 4; color:var(--text-dim); font-size:0.75rem; text-align:center; padding:20px;">
+                                Завантаження фото...</div>
+                        </div>
+                    </div>
+
+                    <!-- Recent observations with photos -->
+                    <div class="obs-section">
+                        <div class="section-title">Нещодавні спостереження з фото (Україна)</div>
+                        <div class="obs-grid" id="d-obs-grid">
+                            <div
+                                style="grid-column:span 3; color:var(--text-dim); font-size:0.75rem; text-align:center; padding:20px;">
+                                Завантаження...</div>
+                        </div>
+                    </div>
+
+                    <!-- Habitat / Distribution / Facts -->
+                    <div class="extra-row" id="d-extra">
+                        <div class="extra-cell">
+                            <div class="extra-cell-title">Середовище та ареал</div>
+                            <div class="tag-list" id="d-habitat"></div>
+                        </div>
+                        <div class="extra-cell">
+                            <div class="extra-cell-title">Характеристики</div>
+                            <div class="taxo-table" id="d-chars"></div>
+                        </div>
+                        <div class="extra-cell">
+                            <div class="extra-cell-title">Посилання</div>
+                            <div id="d-links" style="display:flex; flex-direction:column; gap:7px; font-size:0.72rem;">
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <script>
+        // ─── STATE ──────────────────────────────────────────────────────
+        const S = {
+            species: [],
+            filtered: [],
+            selected: null,
+            filter: 'all',
+            searchQ: ''
+        };
+
+        const IUCN_COLOR = {
+            LC: '#58a6ff', NT: '#a855f7', VU: '#ff9800', EN: '#ef4444',
+            CR: '#b91c1c', DD: '#6b7280', NE: '#6b7280'
+        };
+
+        const IUCN_LABEL = {
+            LC: 'Least Concern', NT: 'Near Threatened', VU: 'Vulnerable',
+            EN: 'Endangered', CR: 'Critically Endangered', DD: 'Data Deficient', NE: 'Not Evaluated'
+        };
+
+        // ─── INIT ────────────────────────────────────────────────────────
+        async function init() {
+            setInterval(() => {
+                document.getElementById('clock').innerText = new Date().toLocaleTimeString('uk-UA');
+            }, 1000);
+
+            setupSearch();
+            await loadSpecies();
+        }
+
+        // ─── LOAD SPECIES (iNat Ukraine, 7 pages = ~700 species) ─────────
+        async function loadSpecies() {
+            try {
+                const pages = [1, 2, 3, 4, 5, 6, 7];
+                const results = await Promise.all(pages.map(p =>
+                    fetch(`https://api.inaturalist.org/v1/observations/species_counts?taxon_id=3&place_id=8860&per_page=100&page=${p}`)
+                        .then(r => r.json()).catch(() => ({ results: [] }))
+                ));
+
+                const totalSpecies = results[0].total_results || 0;
+                document.getElementById('stat-species').innerText =
+                    totalSpecies >= 1000 ? (totalSpecies / 1000).toFixed(1) + 'k' : totalSpecies;
+
+                // Total obs from Ukraine
+                fetch('https://api.inaturalist.org/v1/observations?taxon_id=3&place_id=8860&per_page=1')
+                    .then(r => r.json()).then(j => {
+                        const tot = j.total_results || 0;
+                        document.getElementById('stat-obs').innerText =
+                            tot >= 1000 ? (tot / 1000).toFixed(1) + 'k' : tot;
+                    }).catch(() => { });
+
+                S.species = results.flatMap(r => (r.results || []).map(item => ({
+                    id: item.taxon.id,
+                    name: item.taxon.preferred_common_name || item.taxon.name,
+                    sci: item.taxon.name,
+                    count: item.count,
+                    img: item.taxon.default_photo?.square_url || null,
+                    imgMed: item.taxon.default_photo?.medium_url || null,
+                    imgLarge: item.taxon.default_photo?.large_url || null,
+                    iucn: item.taxon.conservation_status?.status_name?.toUpperCase() ||
+                        (item.taxon.threatened ? 'VU' : 'LC'),
+                    rank: item.taxon.rank || 'species',
+                    iconic: item.taxon.iconic_taxon_name || 'Aves',
+                    ancestorIds: item.taxon.ancestor_ids || [],
+                    taxonPhotos: item.taxon.taxon_photos || null,
+                })));
+
+                // Deduplicate
+                const seen = new Set();
+                S.species = S.species.filter(s => {
+                    if (seen.has(s.sci)) return false;
+                    seen.add(s.sci); return true;
+                });
+
+                S.filtered = [...S.species];
+                renderList();
+            } catch (e) {
+                console.error(e);
+                document.getElementById('species-list').innerHTML =
+                    '<div style="padding:20px; color:var(--text-dim); font-size:0.75rem;">Помилка завантаження</div>';
+            }
+        }
+
+        // ─── RENDER LIST ────────────────────────────────────────────────
+        function renderList() {
+            const el = document.getElementById('species-list');
+            const q = S.searchQ.toLowerCase().trim();
+
+            S.filtered = S.species.filter(s => {
+                const mQ = !q || s.name.toLowerCase().includes(q) || s.sci.toLowerCase().includes(q);
+                const mF = S.filter === 'all' || s.iucn === S.filter;
+                return mQ && mF;
+            });
+
+            document.getElementById('sp-count-label').innerText =
+                `${S.filtered.length} видів`;
+
+            if (S.filtered.length === 0) {
+                el.innerHTML = '<div style="padding:20px; color:var(--text-dim); font-size:0.75rem; text-align:center;">Нічого не знайдено</div>';
+                return;
+            }
+
+            el.innerHTML = '';
+            S.filtered.forEach((s, i) => {
+                const card = document.createElement('div');
+                card.className = 'sp-card' + (S.selected?.sci === s.sci ? ' active' : '');
+                card.dataset.idx = i;
+
+                const color = IUCN_COLOR[s.iucn] || '#58a6ff';
+                const threatened = ['VU', 'EN', 'CR'].includes(s.iucn);
+
+                card.innerHTML = `
+            <img class="sp-thumb"
+                 src="${s.img || 'https://via.placeholder.com/44/111/444?text=🐦'}"
+                 onerror="this.src='https://via.placeholder.com/44/111/444?text=🐦'">
+            <div class="sp-info">
+                <div class="sp-name">${s.name}</div>
+                <div class="sp-sci">${s.sci}</div>
+                <div class="sp-meta">
+                    <div class="iucn-dot" style="background:${color};"></div>
+                    <span class="sp-obs-count">${s.count.toLocaleString()} obs</span>
+                    ${threatened ? `<span class="iucn-badge-small" style="background:${color}22; color:${color}; border:1px solid ${color}44;">${s.iucn}</span>` : ''}
+                </div>
+            </div>`;
+
+                card.onclick = () => selectBird(s);
+                el.appendChild(card);
+            });
+        }
+
+        // ─── SEARCH & FILTER ────────────────────────────────────────────
+        function setupSearch() {
+            document.getElementById('search-input').addEventListener('input', e => {
+                S.searchQ = e.target.value;
+                renderList();
+            });
+            document.querySelectorAll('.fchip').forEach(chip => {
+                chip.addEventListener('click', () => {
+                    document.querySelectorAll('.fchip').forEach(c => c.classList.remove('active'));
+                    chip.classList.add('active');
+                    S.filter = chip.dataset.filter;
+                    renderList();
+                });
+            });
+        }
+
+        // ─── SELECT BIRD ────────────────────────────────────────────────
+        async function selectBird(s) {
+            S.selected = s;
+            renderList(); // update active state
+
+            document.getElementById('detail-empty').style.display = 'none';
+            const dv = document.getElementById('detail-view');
+            dv.style.display = 'flex';
+
+            // Hero
+            const heroUrl = s.imgLarge || s.imgMed || s.img || '';
+            document.getElementById('d-hero-img').src = heroUrl;
+            document.getElementById('d-name').innerText = s.name;
+            document.getElementById('d-sci').innerText = s.sci;
+
+            const iucnColor = IUCN_COLOR[s.iucn] || '#58a6ff';
+            const iucnClass = ({ LC: 'badge-lc', NT: 'badge-nt', VU: 'badge-vu', EN: 'badge-en', CR: 'badge-cr' })[s.iucn] || 'badge-lc';
+            document.getElementById('d-badges').innerHTML = `
+        <span class="badge ${iucnClass}">${s.iucn} — ${IUCN_LABEL[s.iucn] || s.iucn}</span>
+        <span class="badge badge-inat">iNaturalist UA</span>
+        <span class="badge badge-photo-num" id="badge-photo-count">🖼 —</span>
+    `;
+
+            // Quick stats
+            document.getElementById('ds-obs').innerText = s.count.toLocaleString();
+            document.getElementById('ds-iucn').innerText = s.iucn;
+            document.getElementById('ds-iucn').style.color = iucnColor;
+            document.getElementById('ds-rank').innerText = s.rank;
+            document.getElementById('ds-world').innerText = '...';
+            document.getElementById('ds-photos').innerText = '...';
+
+            // Reset sections
+            document.getElementById('d-desc').innerText = 'Завантаження опису...';
+            document.getElementById('d-taxo').innerHTML = '';
+            document.getElementById('d-gallery').innerHTML = '<div style="grid-column:span 4; padding:20px; text-align:center; color:var(--text-dim); font-size:0.75rem;"><div class="spinner" style="margin:0 auto 10px;"></div>Завантаження фото...</div>';
+            document.getElementById('d-obs-grid').innerHTML = '<div style="grid-column:span 3; padding:20px; text-align:center; color:var(--text-dim); font-size:0.75rem;"><div class="spinner" style="margin:0 auto 10px;"></div>Завантаження...</div>';
+
+            // Fetch all data in parallel
+            Promise.all([
+                fetchTaxonDetail(s),
+                fetchWikipedia(s),
+                fetchPhotos(s),
+                fetchRecentObs(s)
+            ]);
+        }
+
+        // ─── FETCH TAXON DETAIL ─────────────────────────────────────────
+        async function fetchTaxonDetail(s) {
+            try {
+                const r = await fetch(`https://api.inaturalist.org/v1/taxa/${s.id}?locale=uk`);
+                const j = await r.json();
+                const t = (j.results || [])[0];
+                if (!t) return;
+
+                // World count
+                const worldCount = t.observations_count || 0;
+                document.getElementById('ds-world').innerText =
+                    worldCount >= 1000000 ? (worldCount / 1000000).toFixed(1) + 'M'
+                        : worldCount >= 1000 ? (worldCount / 1000).toFixed(1) + 'k'
+                            : worldCount;
+
+                // Photo count
+                const photoCount = t.taxon_photos_count || (t.taxon_photos?.length) || 0;
+                document.getElementById('ds-photos').innerText =
+                    photoCount >= 1000 ? (photoCount / 1000).toFixed(1) + 'k' : (photoCount || '—');
+
+                // Taxonomy chain
+                const ancestors = t.ancestors || [];
+                const taxoData = [
+                    ['Клас', 'Aves (Птахи)'],
+                    ['Ряд', ancestors.find(a => a.rank === 'order')?.name || '—'],
+                    ['Родина', ancestors.find(a => a.rank === 'family')?.preferred_common_name || ancestors.find(a => a.rank === 'family')?.name || '—'],
+                    ['Рід', ancestors.find(a => a.rank === 'genus')?.name || s.sci.split(' ')[0]],
+                    ['Вид', s.sci],
+                    ['Ранг', t.rank || s.rank],
+                    ['Статус IUCN', `<span style="color:${IUCN_COLOR[s.iucn] || '#58a6ff'};font-weight:800;">${s.iucn} — ${IUCN_LABEL[s.iucn] || ''}</span>`],
+                    ['Спостережень (світ)', worldCount >= 1000 ? (worldCount / 1000).toFixed(1) + 'k' : worldCount],
+                    ['Спостережень (UA)', s.count.toLocaleString()],
+                    ['Охоронних зон', t.listed_taxa_count !== undefined ? t.listed_taxa_count : '—'],
+                ];
+
+                document.getElementById('d-taxo').innerHTML = taxoData
+                    .map(([k, v]) => `
+                <div class="taxo-row">
+                    <span class="taxo-key">${k}</span>
+                    <span class="taxo-val">${v}</span>
+                </div>`)
+                    .join('');
+
+                // Habitat tags (from description or default)
+                const habitats = guessHabitats(s.iconic, t.name);
+                document.getElementById('d-habitat').innerHTML =
+                    habitats.map(h => `<span class="tag">${h}</span>`).join('');
+
+                // Characteristics
+                const chars = [
+                    ['Ряд', ancestors.find(a => a.rank === 'order')?.name || '—'],
+                    ['Родина', ancestors.find(a => a.rank === 'family')?.name || '—'],
+                    ['Підвиди', t.children?.length ? t.children.length : '—'],
+                    ['Ендемік UA', t.endemic ? 'Так ✓' : 'Ні'],
+                    ['Зникаючий', ['EN', 'CR'].includes(s.iucn) ? 'Так ⚠' : 'Ні'],
+                ];
+
+                document.getElementById('d-chars').innerHTML = chars.map(([k, v]) => `
+            <div class="taxo-row">
+                <span class="taxo-key">${k}</span>
+                <span class="taxo-val">${v}</span>
+            </div>`).join('');
+
+                // Links
+                const links = [];
+                if (t.wikipedia_url) links.push(`<a href="${t.wikipedia_url}" target="_blank" style="color:var(--accent); text-decoration:none;">📖 Wikipedia ↗</a>`);
+                links.push(`<a href="https://www.inaturalist.org/taxa/${s.id}" target="_blank" style="color:var(--inat); text-decoration:none;">🌿 iNaturalist ↗</a>`);
+                links.push(`<a href="https://ebird.org/species/${encodeURIComponent(s.sci.replace(' ', '-').toLowerCase())}" target="_blank" style="color:var(--orange); text-decoration:none;">🐦 eBird ↗</a>`);
+                links.push(`<a href="https://xeno-canto.org/species/search?query=${encodeURIComponent(s.sci)}" target="_blank" style="color:#e84c3d; text-decoration:none;">🎵 Xeno-Canto ↗</a>`);
+                document.getElementById('d-links').innerHTML = links.join('');
+
+            } catch (e) { console.error('Taxon detail error:', e); }
+        }
+
+        // ─── HABITAT GUESS ──────────────────────────────────────────────
+        function guessHabitats(iconic, name) {
+            const n = (name || '').toLowerCase();
+            const base = ['Україна', 'Палеарктика'];
+            if (n.includes('aquat') || n.includes('duck') || n.includes('heron') || n.includes('crane'))
+                return [...base, '💧 Водойми', '🌾 Болота', '🏞 Річки'];
+            if (n.includes('eagle') || n.includes('hawk') || n.includes('falcon') || n.includes('raptor'))
+                return [...base, '🌲 Ліси', '⛰ Гори', '🌿 Степи'];
+            if (n.includes('spar') || n.includes('finch') || n.includes('tit') || n.includes('warbler'))
+                return [...base, '🌳 Сади', '🏡 Міські парки', '🌾 Поля'];
+            return [...base, '🌲 Ліси', '🌿 Кущі', '🌾 Луки'];
+        }
+
+        // ─── WIKIPEDIA ──────────────────────────────────────────────────
+        async function fetchWikipedia(s) {
+            const el = document.getElementById('d-desc');
+            try {
+                // Try Ukrainian first
+                let res = await fetch(`https://uk.wikipedia.org/api/rest_v1/page/summary/${encodeURIComponent(s.name.split('(')[0].trim())}`);
+                let j = await res.json();
+                if (j.extract && j.extract.length > 50) { el.innerText = j.extract; return; }
+
+                // Try English by sci name
+                res = await fetch(`https://en.wikipedia.org/api/rest_v1/page/summary/${encodeURIComponent(s.sci)}`);
+                j = await res.json();
+                if (j.extract && j.extract.length > 50) {
+                    try {
+                        const tr = await fetch(`https://translate.googleapis.com/translate_a/single?client=gtx&sl=en&tl=uk&dt=t&q=${encodeURIComponent(j.extract.substring(0, 800))}`);
+                        const tj = await tr.json();
+                        el.innerText = tj[0].map(x => x[0]).join('');
+                    } catch {
+                        el.innerText = j.extract;
+                    }
+                } else {
+                    el.innerText = 'Опис для цього виду відсутній у Wikipedia. Вид зафіксований в Україні через iNaturalist.';
+                }
+            } catch (e) { el.innerText = 'Не вдалося завантажити опис.'; }
+        }
+
+        // ─── PHOTO GALLERY ──────────────────────────────────────────────
+        async function fetchPhotos(s) {
+            const el = document.getElementById('d-gallery');
+            try {
+                // Fetch taxon photos from iNat
+                const r = await fetch(`https://api.inaturalist.org/v1/taxa/${s.id}?locale=uk`);
+                const j = await r.json();
+                const t = (j.results || [])[0];
+
+                let photos = [];
+                if (t?.taxon_photos?.length) {
+                    photos = t.taxon_photos.map(tp => ({
+                        url: tp.photo?.large_url || tp.photo?.medium_url || tp.photo?.url,
+                        thumb: tp.photo?.medium_url || tp.photo?.square_url,
+                        attr: tp.photo?.attribution || '',
+                        license: tp.photo?.license_code || '',
+                    })).filter(p => p.url);
+                }
+
+                document.getElementById('badge-photo-count').innerText = `🖼 ${photos.length} фото`;
+
+                if (photos.length === 0) {
+                    el.innerHTML = '<div style="grid-column:span 4; padding:20px; text-align:center; color:var(--text-dim); font-size:0.75rem;">Фото відсутні</div>';
+                    return;
+                }
+
+                el.innerHTML = photos.slice(0, 9).map((p, i) => `
+            <img class="gallery-img${i === 0 ? ' featured' : ''}"
+                 src="${p.thumb || p.url}"
+                 alt="${s.name}"
+                 title="${p.attr}"
+                 loading="lazy"
+                 onclick="openPhotoFull('${p.url}')"
+                 onerror="this.parentNode.removeChild(this)">
+        `).join('');
+
+            } catch (e) {
+                el.innerHTML = '<div style="grid-column:span 4; padding:20px; text-align:center; color:var(--text-dim); font-size:0.75rem;">Помилка завантаження фото</div>';
+            }
+        }
+
+        // ─── RECENT OBSERVATIONS WITH PHOTOS ───────────────────────────
+        async function fetchRecentObs(s) {
+            const el = document.getElementById('d-obs-grid');
+            try {
+                const r = await fetch(`https://api.inaturalist.org/v1/observations?taxon_id=${s.id}&place_id=8860&photos=true&quality_grade=research&per_page=12&order=desc&order_by=observed_on`);
+                const j = await r.json();
+                const obs = (j.results || []).filter(o => o.photos?.length);
+
+                if (obs.length === 0) {
+                    el.innerHTML = '<div style="grid-column:span 3; padding:20px; text-align:center; color:var(--text-dim); font-size:0.75rem;">Спостережень з фото в Україні не знайдено</div>';
+                    return;
+                }
+
+                el.innerHTML = obs.slice(0, 9).map(o => {
+                    const img = o.photos[0]?.url?.replace('square', 'medium') || o.photos[0]?.url || '';
+                    const place = o.place_guess || o.location || '—';
+                    const date = o.observed_on || '—';
+                    const user = o.user?.login || '—';
+                    return `
+                <div class="obs-card" onclick="window.open('https://www.inaturalist.org/observations/${o.id}','_blank')">
+                    <img class="obs-card-img" src="${img}" alt="${s.name}"
+                         onerror="this.src='https://via.placeholder.com/200x150/111/444?text=🐦'">
+                    <div class="obs-card-info">
+                        <div class="obs-card-place">📍 ${place}</div>
+                        <div class="obs-card-meta">📅 ${date} · 👤 ${user}</div>
+                    </div>
+                </div>`;
+                }).join('');
+
+            } catch (e) {
+                el.innerHTML = '<div style="grid-column:span 3; padding:20px; text-align:center; color:var(--text-dim); font-size:0.75rem;">Помилка</div>';
+            }
+        }
+
+        // ─── OPEN PHOTO FULLSCREEN ──────────────────────────────────────
+        function openPhotoFull(url) {
+            const overlay = document.createElement('div');
+            overlay.style.cssText = `
+        position:fixed; inset:0; background:rgba(0,0,0,0.95); z-index:9999;
+        display:flex; align-items:center; justify-content:center; cursor:pointer;`;
+            overlay.onclick = () => document.body.removeChild(overlay);
+            const img = document.createElement('img');
+            img.src = url;
+            img.style.cssText = 'max-width:92vw; max-height:92vh; border-radius:12px; object-fit:contain;';
+            overlay.appendChild(img);
+            document.body.appendChild(overlay);
+        }
+
+        window.onload = init;
+        window.openPhotoFull = openPhotoFull;
+    </script>
+</body>
+
+</html>
