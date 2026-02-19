@@ -1057,6 +1057,12 @@
 
                 S.filtered = [...S.species];
                 renderList();
+
+                // Select a random bird on load
+                if (S.species.length > 0) {
+                    const rnd = Math.floor(Math.random() * S.species.length);
+                    selectBird(S.species[rnd]);
+                }
             } catch (e) {
                 console.error(e);
                 document.getElementById('species-list').innerHTML =
